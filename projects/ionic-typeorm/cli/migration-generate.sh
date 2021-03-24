@@ -21,8 +21,8 @@ if [[ $# != 1 ]]; then
 fi
 
 CLI="$(dirname "$0")/typeorm-cli.sh"
-CONFIG="node_modules/rare-lib-type-orm/type-orm-db/cli/cli.ormconfig.json"
-TEMP_SQLITE_DB="node_modules/rare-lib-type-orm/type-orm-db/cli/migrations.tmp.sqlite"
+CONFIG="node_modules/ionic-typeorm/type-orm-db/cli/cli.ormconfig.json"
+TEMP_SQLITE_DB="node_modules/ionic-typeorm/type-orm-db/cli/migrations.tmp.sqlite"
 
 NAME="$1"
 

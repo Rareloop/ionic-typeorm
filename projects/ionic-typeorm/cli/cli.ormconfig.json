@@ -1,6 +1,6 @@
 {
     "type": "sqlite",
-    "database": "node_modules/rare-lib-type-orm/typeorm/cli/migrations.tmp.sqlite",
+    "database": "node_modules/ionic-typeorm/typeorm/cli/migrations.tmp.sqlite",
     "logging": false,
     "subscribers": [],
     "entities": [

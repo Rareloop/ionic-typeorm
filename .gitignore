@@ -29,11 +29,4 @@ npm-debug.log*
 /plugins
 /www
 
-.gradle/
-# Ensure gradle-wrapper is checked in for CI
-!android/gradle/wrapper/gradle-wrapper.jar
-.nyc_output/
-
-node_modules
-
 dist/

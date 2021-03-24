@@ -1,6 +1,6 @@
 {
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
-    "dest": "../../dist/rare-lib-type-orm",
+    "dest": "../../dist/ionic-typeorm",
     "assets": [
         "cli/*"
     ],

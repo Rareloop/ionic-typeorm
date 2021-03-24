@@ -19,7 +19,7 @@ fi
 
 CLI="$(dirname "$0")/typeorm-cli.sh"
 
-CONFIG="node_modules/rare-lib-type-orm/type-orm-db/cli/cli.ormconfig.json"
+CONFIG="node_modules/ionic-typeorm/type-orm-db/cli/cli.ormconfig.json"
 
 NAME="$1"
 

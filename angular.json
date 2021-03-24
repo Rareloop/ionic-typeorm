@@ -3,39 +3,39 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "rare-lib-type-orm": {
+        "ionic-typeorm": {
             "projectType": "library",
-            "root": "projects/rare-lib-type-orm",
-            "sourceRoot": "projects/rare-lib-type-orm/src",
-            "prefix": "rarelib",
+            "root": "projects/ionic-typeorm",
+            "sourceRoot": "projects/ionic-typeorm/src",
+            "prefix": "rare",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:ng-packagr",
                     "options": {
-                        "tsConfig": "projects/rare-lib-type-orm/tsconfig.lib.json",
-                        "project": "projects/rare-lib-type-orm/ng-package.json"
+                        "tsConfig": "projects/ionic-typeorm/tsconfig.lib.json",
+                        "project": "projects/ionic-typeorm/ng-package.json"
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/rare-lib-type-orm/tsconfig.lib.prod.json"
+                            "tsConfig": "projects/ionic-typeorm/tsconfig.lib.prod.json"
                         }
                     }
                 },
                 "test": {
                     "builder": "@angular-devkit/build-angular:karma",
                     "options": {
-                        "polyfills": "projects/rare-lib-type-orm/src/polyfills.ts",
-                        "main": "projects/rare-lib-type-orm/src/test.ts",
-                        "tsConfig": "projects/rare-lib-type-orm/tsconfig.spec.json",
-                        "karmaConfig": "projects/rare-lib-type-orm/karma.conf.js"
+                        "polyfills": "projects/ionic-typeorm/src/polyfills.ts",
+                        "main": "projects/ionic-typeorm/src/test.ts",
+                        "tsConfig": "projects/ionic-typeorm/tsconfig.spec.json",
+                        "karmaConfig": "projects/ionic-typeorm/karma.conf.js"
                     }
                 },
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
                         "lintFilePatterns": [
-                            "projects/rare-lib-type-orm/src/**/*.ts",
-                            "projects/rare-lib-type-orm/src/**/*.html"
+                            "projects/ionic-typeorm/src/**/*.ts",
+                            "projects/ionic-typeorm/src/**/*.html"
                         ]
                     }
                 }
@@ -45,5 +45,5 @@
     "cli": {
         "analytics": false
     },
-    "defaultProject": "rare-lib-common"
+    "defaultProject": "ionic-typeorm"
 }

@@ -17,10 +17,7 @@
         "module": "es2020",
         "lib": ["es2018", "dom"],
         "paths": {
-            "rare-lib-common": ["dist/rare-lib-common/rare-lib-common", "dist/rare-lib-common"],
-            "rare-lib-type-orm": ["dist/rare-lib-type-orm/rare-lib-type-orm", "dist/rare-lib-type-orm"],
-            "rare-lib-browser": ["dist/rare-lib-browser/rare-lib-browser", "dist/rare-lib-browser"],
-            "rare-lib-sqlite": ["dist/rare-lib-sqlite/rare-lib-sqlite", "dist/rare-lib-sqlite"]
+            "ionic-typeorm": ["dist/ionic-typeorm/ionic-typeorm", "dist/ionic-typeorm"]
         }
     },
     "angularCompilerOptions": {

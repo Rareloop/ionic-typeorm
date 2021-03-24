@@ -13,8 +13,8 @@ You must have entities and migrations in the following locations:
 
 ``` JSON
     "scripts": {
-        "migration:generate": "./node_modules/rare-lib-type-orm/typeorm/cli/migration-generate.sh",
-        "migration:create": "./node_modules/rare-lib-type-orm/typeorm/cli/migration-create.sh"
+        "migration:generate": "./node_modules/ionic-typeorm/typeorm/cli/migration-generate.sh",
+        "migration:create": "./node_modules/ionic-typeorm/typeorm/cli/migration-create.sh"
     }
 ```
 

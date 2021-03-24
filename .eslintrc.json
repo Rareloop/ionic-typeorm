@@ -4,7 +4,7 @@
         {
             "files": ["*.ts"],
             "parserOptions": {
-                "project": ["tsconfig.json", "cypress/tsconfig.json"],
+                "project": ["tsconfig.json"],
                 "createDefaultProgram": true
             },
             "extends": [
@@ -30,7 +30,7 @@
                     "error",
                     {
                         "type": "element",
-                        "prefix": "rarelib",
+                        "prefix": "rare",
                         "style": "kebab-case"
                     }
                 ],
@@ -38,7 +38,7 @@
                     "error",
                     {
                         "type": "attribute",
-                        "prefix": "rarelib",
+                        "prefix": "rare",
                         "style": "camelCase"
                     }
                 ]

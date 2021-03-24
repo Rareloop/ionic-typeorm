@@ -25,7 +25,7 @@ module.exports = function (config) {
             suppressAll: true, // removes the duplicated traces
         },
         coverageReporter: {
-            dir: require('path').join(__dirname, '../../coverage/rare-lib-type-orm'),
+            dir: require('path').join(__dirname, '../../coverage/ionic-typeorm'),
             subdir: '.',
             reporters: [{ type: 'html' }, { type: 'text-summary' }],
         },

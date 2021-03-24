@@ -1,5 +1,5 @@
 {
-    "name": "rare-lib-type-orm",
+    "name": "ionic-typeorm",
     "version": "1.0.0",
     "peerDependencies": {
         "@angular/common": "^11.0.9",
