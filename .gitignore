@@ -1,0 +1,39 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+*~
+*.sw[mnpcod]
+.tmp
+*.tmp
+*.tmp.*
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
+$RECYCLE.BIN/
+
+*.log
+log.txt
+npm-debug.log*
+
+.idea
+/.ionic
+/.sass-cache
+/.sourcemaps
+/.versions
+/.vscode
+/coverage
+/node_modules
+/platforms
+/plugins
+/www
+
+.gradle/
+# Ensure gradle-wrapper is checked in for CI
+!android/gradle/wrapper/gradle-wrapper.jar
+.nyc_output/
+
+node_modules
+
+dist/

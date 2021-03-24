@@ -1,0 +1,44 @@
+# workflow:
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == 'master'     # Execute jobs when a new commit is pushed to master branch
+#     - if: $CI_MERGE_REQUEST_ID              # Execute jobs in merge request context
+
+image: node:12
+
+stages:
+    - lint
+    - test
+
+# Cache modules in between jobs
+cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+        - .npm/
+
+lint:
+    stage: lint
+    interruptible: true
+    script:
+        - npm ci --cache .npm  --no-optional --prefer-offline
+        - npm run lint && npm run lint:style
+    tags:
+        - ionic
+
+test:
+    stage: test
+    image: weboaks/node-karma-protractor-chrome:alpine-root # Require root to use .nvm cache
+    interruptible: true
+    script:
+        - npm ci --cache .npm  --no-optional --prefer-offline
+        - npm run test:ci
+    tags:
+        - ionic
+
+build:
+    stage: test
+    interruptible: true
+    script:
+        - npm ci --cache .npm  --no-optional --prefer-offline
+        - npm run build:all
+    tags:
+        - ionic

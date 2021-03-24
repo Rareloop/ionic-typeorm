@@ -1,0 +1,12 @@
+{
+    "name": "rare-lib-type-orm",
+    "version": "1.0.0",
+    "peerDependencies": {
+        "@angular/common": "^11.0.9",
+        "@angular/core": "^11.0.9",
+        "typeorm": "^0.2.31"
+    },
+    "dependencies": {
+        "tslib": "^2.0.0"
+    }
+}
