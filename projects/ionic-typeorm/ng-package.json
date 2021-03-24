@@ -3,7 +3,8 @@
     "dest": "../../dist/ionic-typeorm",
     "assets": [
         "cli/**/*",
-        "config/**/*"
+        "config/**/*",
+        "test-lib/**/*"
     ],
     "whitelistedNonPeerDependencies": [
         "tslib",
