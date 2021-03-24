@@ -12,12 +12,9 @@
     </ion-header>
 
     <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>
-            Start with Ionic
-            <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components"
-                >UI Components</a
-            >
-        </p>
+        <strong>TypeORM Database</strong>
+        <ul style="width: 200px; margin: auto">
+            <li *ngFor="let item of items">{{ item.name }}: {{ item.phoneNumber }}</li>
+        </ul>
     </div>
 </ion-content>

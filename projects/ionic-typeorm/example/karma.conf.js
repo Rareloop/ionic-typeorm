@@ -24,6 +24,13 @@ module.exports = function (config) {
         jasmineHtmlReporter: {
             suppressAll: true, // removes the duplicated traces
         },
+        files: [
+            {
+                pattern: 'node_modules/@rareloop/ionic-typeorm/test-lib/sql.js.0.5.0/sql.js',
+                included: true,
+                watched: false,
+            },
+        ],
         coverageReporter: {
             dir: require('path').join(__dirname, './coverage/ngv'),
             subdir: '.',

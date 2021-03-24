@@ -3,8 +3,8 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "outDir": "./out-tsc/app",
-        "types": []
+        "types": ["node"]
     },
     "files": ["src/main.ts", "src/polyfills.ts"],
-    "include": ["src/**/*.d.ts"]
+    "include": ["src/**/*.d.ts", "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"]
 }
