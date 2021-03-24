@@ -6,11 +6,6 @@
         "config/**/*",
         "test-lib/**/*"
     ],
-    "whitelistedNonPeerDependencies": [
-        "tslib",
-        "typeorm",
-        "sql.js"
-    ],
     "lib": {
         "entryFile": "src/public-api.ts",
         "umdModuleIds": {

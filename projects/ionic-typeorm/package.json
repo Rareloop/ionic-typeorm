@@ -17,7 +17,10 @@
     },
     "peerDependencies": {
         "@angular/common": "^11.0.9",
-        "@angular/core": "^11.0.9"
+        "@angular/core": "^11.0.9",
+        "@angular-builders/custom-webpack": "^11.1.9",
+        "typeorm": "^0.2.31",
+        "sql.js": "^1.5.0"
     },
     "bin": {
         "ionic-typeorm": "./cli/typeorm-cli.sh",
@@ -25,8 +28,6 @@
         "ionic-typeorm-generate": "./cli/migration-generate.sh"
     },
     "dependencies": {
-        "typeorm": "^0.2.31",
-        "tslib": "^2.0.0",
-        "sql.js": "^1.5.0"
+        "tslib": "^2.0.0"
     }
 }
