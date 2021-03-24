@@ -1,0 +1,16 @@
+{
+    "type": "sqlite",
+    "database": "node_modules/ionic-typeorm/typeorm/cli/migrations.tmp.sqlite",
+    "logging": false,
+    "subscribers": [],
+    "entities": [
+        "src/app/database/orm/entities/*.ts"
+    ],
+    "migrations": [
+        "src/app/database/orm/migrations/*.ts"
+    ],
+    "cli": {
+        "entitiesDir": "src/app/database/orm/entities",
+        "migrationsDir": "src/app/database/orm/migrations"
+    }
+}
