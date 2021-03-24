@@ -1,12 +1,32 @@
 {
-    "name": "ionic-typeorm",
-    "version": "1.0.0",
+    "name": "@rareloop/ionic-typeorm",
+    "version": "0.0.5",
+    "description": "",
+    "license": "MIT",
+    "author": "Rareloop",
+    "homepage": "https://github.com/Rareloop/ionic-typeorm#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Rareloop/ionic-typeorm.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Rareloop/ionic-typeorm/issues"
+    },
+    "scripts": {
+        "postinstall": "echo 'Post install'"
+    },
     "peerDependencies": {
         "@angular/common": "^11.0.9",
-        "@angular/core": "^11.0.9",
-        "typeorm": "^0.2.31"
+        "@angular/core": "^11.0.9"
+    },
+    "bin": {
+        "ionic-typeorm": "./cli/typeorm-cli.sh",
+        "ionic-typeorm-create": "./cli/migration-create.sh",
+        "ionic-typeorm-generate": "./cli/migration-generate.sh"
     },
     "dependencies": {
-        "tslib": "^2.0.0"
+        "typeorm": "^0.2.31",
+        "tslib": "^2.0.0",
+        "sql.js": "^1.5.0"
     }
 }

@@ -2,7 +2,13 @@
     "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
     "dest": "../../dist/ionic-typeorm",
     "assets": [
-        "cli/*"
+        "cli/**/*",
+        "config/**/*"
+    ],
+    "whitelistedNonPeerDependencies": [
+        "tslib",
+        "typeorm",
+        "sql.js"
     ],
     "lib": {
         "entryFile": "src/public-api.ts",

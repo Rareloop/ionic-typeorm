@@ -20,15 +20,14 @@ if [[ $# != 1 ]]; then
     exit 1
 fi
 
-CLI="$(dirname "$0")/typeorm-cli.sh"
-CONFIG="node_modules/ionic-typeorm/type-orm-db/cli/cli.ormconfig.json"
-TEMP_SQLITE_DB="node_modules/ionic-typeorm/type-orm-db/cli/migrations.tmp.sqlite"
+CONFIG="./node_modules/@rareloop/ionic-typeorm/cli/cli.ormconfig.json"
+TEMP_SQLITE_DB="./node_modules/@rareloop/ionic-typeorm/cli/migrations.tmp.sqlite"
 
 NAME="$1"
 
 rm -f "$TEMP_SQLITE_DB"
 
-$CLI "$CONFIG" migration:run
-$CLI "$CONFIG" migration:generate -p --connection --name "$NAME"
+ionic-typeorm "$CONFIG" migration:run
+ionic-typeorm "$CONFIG" migration:generate -p --connection --name "$NAME"
 
 rm -f "$TEMP_SQLITE_DB"
