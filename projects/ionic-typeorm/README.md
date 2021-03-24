@@ -4,6 +4,7 @@ In `tsconfig.json`:
 
 ``` json
     "compilerOptions": {
+        "emitDecoratorMetadata": true,
         "paths": {
             ...
            "react-native-sqlite-storage": ["node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"],
@@ -15,7 +16,11 @@ and `tsconfig.app.json`
 
 ``` json
 {
-     "include": ["src/**/*.ts", "src/**/*.d.ts", "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"],
+    "compilerOptions": {
+        "types": ["node"],
+    },
+
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"],
 }
 ```
 
@@ -41,16 +46,19 @@ In `angular.json`
                     "builder": "@angular-builders/custom-webpack:browser",
                     "options": {
                         "customWebpackConfig": {
-                            "path": "./config/webpack.asm.js"
+                            "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.asm.js"
                         },
                     },
                     "configurations": {
                         "production": {
                             "customWebpackConfig": {
-                                "path": "./config/webpack.wasm.js"
+                                "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.wasm.js"
                             },
                         }
                     }
+                },
+                "serve": {
+                    "builder": "@angular-builders/custom-webpack:dev-server"
                 }
             }
         }
@@ -71,6 +79,16 @@ module.exports = function (config) {
             },
         ],
     })
+}
+```
+
+and `tsconfig.spec.json`
+
+``` json
+{
+    "compilerOptions": {
+        "types": ["jasmine", "node"],
+    }
 }
 ```
 
