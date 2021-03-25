@@ -3,7 +3,7 @@
 
 module.exports = function (config) {
     config.set({
-        basePath: '',
+        basePath: 'src/lib',
         frameworks: ['jasmine', '@angular-devkit/build-angular'],
         plugins: [
             require('karma-jasmine'),
@@ -11,6 +11,13 @@ module.exports = function (config) {
             require('karma-jasmine-html-reporter'),
             require('karma-coverage'),
             require('@angular-devkit/build-angular/plugins/karma'),
+        ],
+        files: [
+            {
+                pattern: '../../test-lib/sql.js.0.5.0/sql.js',
+                included: true,
+                watched: false,
+            },
         ],
         client: {
             jasmine: {
@@ -34,13 +41,13 @@ module.exports = function (config) {
         colors: true,
         logLevel: config.LOG_INFO,
         autoWatch: true,
-        browsers: ['Chrome', 'ChromeHeadless'],
-        customLaunchers: {
+        browsers: ['Chrome'], // , 'ChromeHeadless'],
+        /* customLaunchers: {
             ChromeHeadlessCI: {
                 base: 'ChromeHeadless',
                 flags: ['--no-sandbox'],
             },
-        },
+        }, */
         singleRun: false,
         restartOnFileChange: true,
     });
