@@ -12,9 +12,6 @@
     "bugs": {
         "url": "https://github.com/Rareloop/ionic-typeorm/issues"
     },
-    "scripts": {
-        "postinstall": "echo 'Post install'"
-    },
     "peerDependencies": {
         "@angular/common": "^11.0.9",
         "@angular/core": "^11.0.9",

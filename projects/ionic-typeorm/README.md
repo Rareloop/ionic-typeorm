@@ -65,7 +65,7 @@ In `angular.json`
     }
 ```
 
-For unit tests:
+For unit tests: `karma.conf.js`
 
 ``` javascript
 
