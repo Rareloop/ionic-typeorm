@@ -24,10 +24,10 @@
         "ng": "ng",
         "packagejson:check": "npx prettier-package-json --list-different package.json",
         "packagejson:fix": "npx prettier-package-json --write package.json",
-        "start": "ng serve",
-        "test": "ng test",
         "prepublish": "npm run build -- --prod",
         "publish": "(cd dist/ionic-typeorm && npm publish)",
+        "start": "ng serve",
+        "test": "ng test",
         "test:ci": "ng test --no-watch --no-progress --source-map=true --code-coverage --browsers=ChromeHeadlessCI",
         "prettier:check": "npx prettier --config=.prettierrc.js --ignore-unknown --check *.json *.js ./projects/**/src",
         "prettier:fix": "npx prettier --config=.prettierrc.js --ignore-unknown --write *.json *.js ./projects/**/src"
