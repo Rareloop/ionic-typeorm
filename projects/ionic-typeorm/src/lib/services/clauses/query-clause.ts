@@ -1,7 +1,8 @@
 import { BaseEntity, FindManyOptions } from 'typeorm';
+import { IOrmServiceWhereOperators } from '../db-service';
 
 export interface IQueryClause<T extends BaseEntity> {
-    matches(name: string): boolean;
+    matches(name: IOrmServiceWhereOperators): boolean;
 
-    parse(name: keyof T, ..._args: any[]): FindManyOptions<T>;
+    parse(field: keyof T, ..._args: any[]): FindManyOptions<T>;
 }

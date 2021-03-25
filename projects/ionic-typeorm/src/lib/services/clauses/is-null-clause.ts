@@ -1,8 +1,9 @@
 import { BaseEntity, FindManyOptions, IsNull } from 'typeorm';
+import { IOrmServiceWhereOperators } from '../db-service';
 import { IQueryClause } from './query-clause';
 
 export class IsNullQueryClause<T extends BaseEntity> implements IQueryClause<T> {
-    matches(name: string): boolean {
+    matches(name: IOrmServiceWhereOperators): boolean {
         return name === 'NULL';
     }
 

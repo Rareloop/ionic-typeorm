@@ -1,18 +1,18 @@
 import { QueryRunner, Repository } from 'typeorm';
 
-export interface IOrmSeeder<T> {
-    seed(data: T[]): Promise<void>;
+export interface IOrmSeeder {
+    seed(data: any[]): Promise<void>;
 }
 
-export abstract class OrmSeeder<T, OrmType> implements IOrmSeeder<T> {
+export abstract class OrmSeeder<OrmType> implements IOrmSeeder {
     protected abstract repositoryName: string;
 
     constructor(private queryRunner: QueryRunner) {}
 
-    public async seed(data: T[]) {
+    public async seed(data: any[]): Promise<void> {
         const repo = await this.repo();
         await repo.save(data);
-        console.log('Seeded: ' + this.repositoryName + ':', data);
+        // console.log('Seeded: ' + this.repositoryName + ':', data);
     }
 
     protected async repo() {

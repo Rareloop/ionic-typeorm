@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+            "name": "John Smith",
+            "phoneNumber": null
+        },
+        {
+            "name": "Jack MacDonald",
+            "phoneNumber": "012345678910"
+        },
+        {
+            "name": "James Bond",
+            "phoneNumber": "007"
+        }
+    ]
+}

@@ -1,123 +1,118 @@
-import { waitForAsync } from '@angular/core/testing';
-import { Entity, Column, MigrationInterface, QueryRunner } from 'typeorm';
-import { CommonEntity } from '../entities/common-entity';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { TypeOrmTestUtils } from '../test/type-orm-test-utils';
-import { OrmSeeder } from '../seeds/orm-seeder.seeder';
-import { IDBService } from './db-service';
-import { OrmService } from './orm-service.service';
-
-@Entity('item')
-export class Item extends CommonEntity {
-    @Column()
-    name!: string;
-
-    @Column()
-    phoneNumber!: number;
-}
-
-export interface IItem {
-    id: number;
-    name: string;
-    phoneNumber: number;
-}
-
-export class ItemSeeder extends OrmSeeder<IItem, Item> {
-    repositoryName = 'item';
-
-    protected data: IItem[] = [];
-}
-
-export class AddItemTable1616412863882 implements MigrationInterface {
-    name = 'AddItemTable1616412863882';
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
-            CREATE TABLE "item" (
-                "id" integer PRIMARY KEY AUTOINCREMENT NOT NULL,
-                "name" varchar NOT NULL,
-                "phoneNumber" integer NOT NULL
-            )
-        `);
-
-        await this.seed(queryRunner);
-    }
-
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
-            DROP TABLE "item"
-        `);
-    }
-
-    private async seed(queryRunner: QueryRunner): Promise<void> {
-        new ItemSeeder(queryRunner).seed([
-            {
-                id: 1,
-                name: 'Test 1',
-                phoneNumber: 12345,
-            },
-            {
-                id: 2,
-                name: 'Test 2',
-                phoneNumber: 45678,
-            },
-        ]);
-    }
-}
-
-export const TYPE_ORM_ENTITIES = [Item];
-
-export const TYPE_ORM_MIGRATIONS = [
-    AddItemTable1616412863882, // Example
-];
-
-export class ItemService extends OrmService<IItem, Item> {
-    repositoryName = 'item';
-
-    protected castItem(data: Item): IItem {
-        return data;
-    }
-
-    protected castKey(name: keyof IItem): keyof Item {
-        return name;
-    }
-}
+import { TYPE_ORM_TEST_ENTITIES } from '../test/orm/test-entities';
+import { TYPE_ORM_TEST_MIGRATIONS } from '../test/orm/test-migrations';
+import { TestItemService } from '../test/orm/test-services';
+import { getTypeOrmConnection, TYPE_ORM_CONNECTION } from '../connection';
+import { expectedAllTestItems } from '../test/orm/test-expected-data';
+import { ITypeOrmConnection } from 'dist/ionic-typeorm/lib';
+import { castTestItem } from '../test/orm/test-interfaces';
 
 describe('OrmService', () => {
-    let service: IDBService<IItem>;
+    let service: TestItemService;
 
-    let utils: any;
+    let utils: TypeOrmTestUtils;
+    let conn: ITypeOrmConnection;
 
     beforeAll(async () => {
-        utils = new TypeOrmTestUtils('test-app-db', TYPE_ORM_ENTITIES, TYPE_ORM_MIGRATIONS);
-        await utils.openDbConnection();
+        conn = getTypeOrmConnection('test-app-db', TYPE_ORM_TEST_ENTITIES, TYPE_ORM_TEST_MIGRATIONS);
+        utils = new TypeOrmTestUtils(conn, 'orm/fixtures/');
+        await utils.openDbConnection(['warn', 'error']); // , 'query', 'schema', 'all']);
+    });
+
+    afterAll(async () => {
+        await utils.closeDbConnection();
     });
 
     beforeEach(
         waitForAsync(async () => {
+            TestBed.configureTestingModule({
+                providers: [
+                    TestItemService,
+                    {
+                        provide: TYPE_ORM_CONNECTION,
+                        useValue: conn,
+                    },
+                ],
+            });
+
             await utils.reloadFixtures();
 
-            service = new ItemService(utils.databaseService.connection);
+            service = TestBed.inject(TestItemService);
         }),
         10000
     );
 
-    it('should create 1', async () => {
-        const repo = await utils.databaseService.getRepository('item');
-        const items = await repo.find();
-        console.log(items);
+    it('should return all items', async () => {
+        const items = await service.all();
 
-        expect(service).toBeTruthy();
+        expect(items.length).toEqual(expectedAllTestItems.length);
+        expectedAllTestItems.forEach((expectedItem, index) => {
+            const actualItem = castTestItem(items[index]);
+            expectedItem.id = actualItem.id; // Allow for varying auto-increment id
+            expect(actualItem).toEqual(expectedItem);
+        });
     });
 
-    it('should create 2', () => {
-        expect(service).toBeTruthy();
+    it('should return all items where null clause', async () => {
+        const items = await service.allWhere('phoneNumber', 'NULL');
+
+        expect(items.length).toEqual(1);
+        const actualItem = castTestItem(items[0]);
+        expect(actualItem).toEqual({
+            id: actualItem.id,
+            name: 'John Smith',
+            phoneNumber: null,
+            hasPhoneNumber: false,
+        });
     });
 
-    it('should create 3', () => {
-        expect(service).toBeTruthy();
+    it('should return item with id', async () => {
+        const items = await service.all();
+        const item = items[0];
+
+        const numeralFetch = await service.fetch(item.id);
+        const stringFetch = await service.fetch('' + item.id);
+
+        expect(numeralFetch).toBeTruthy();
+        expect(stringFetch).toBeTruthy();
+
+        expect(numeralFetch).toEqual(item);
+        expect(stringFetch).toEqual(item);
     });
 
-    it('should create 4', () => {
-        expect(service).toBeTruthy();
+    it('should save an item', async () => {
+        const items = await service.all();
+        const totalItems = items.length;
+
+        await service.save({
+            name: 'John Wayne',
+        });
+
+        const updatedItems = await service.all();
+        const updatedTotalItems = updatedItems.length;
+        const newItem = castTestItem(updatedItems[updatedItems.length - 1]);
+
+        expect(updatedTotalItems).toEqual(totalItems + 1);
+        expect(newItem).toEqual({
+            id: newItem.id,
+            name: 'John Wayne',
+            phoneNumber: null,
+            hasPhoneNumber: false,
+        });
+    });
+
+    it('should remove an item', async () => {
+        const items = await service.all();
+        const totalItems = items.length;
+        const first = items[0];
+
+        await service.remove([first]);
+
+        const updatedItems = await service.all();
+        const updatedTotalItems = updatedItems.length;
+
+        expect(updatedTotalItems).toEqual(totalItems - 1);
+        expect(updatedItems.find((x) => x.name === first.name)).toEqual(undefined);
     });
 });

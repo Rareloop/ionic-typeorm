@@ -11,8 +11,8 @@ export interface IOrmDatabaseEntity {
 export class OrmDatabaseService {
     constructor(@Inject(TYPE_ORM_CONNECTION) private orm: ITypeOrmConnection) {}
 
-    public async connect(type: 'cordova' | 'browser') {
-        return this.orm.connect(type);
+    public async connect(type: 'cordova' | 'browser', logging?: string[]) {
+        return this.orm.connect(type, logging);
     }
 
     public async disconnect() {

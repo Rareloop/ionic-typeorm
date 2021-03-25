@@ -1,3 +1,5 @@
+import { BaseEntity } from 'typeorm';
+
 export type IOrmServiceWhereOperators =
     | '<=' // Less than or equal to
     | '<' // Less than
@@ -5,17 +7,18 @@ export type IOrmServiceWhereOperators =
     | '>=' // More than or equal to
     | '!' // Not
     | '=' // Equal
+    | 'NULL' // Null
     | 'LIKE' // Like
     | 'ILIKE' // Ilike
     | 'BETWEEN' // Between
     | 'IN' // In
     | 'RAW'; // In
 
-export interface IDBService<T> {
+export interface IDBService<T extends BaseEntity> {
     fetch(id: any): Promise<T | null>;
     all(): Promise<T[]>;
     allWhere(field: keyof T, comparitor: IOrmServiceWhereOperators, ...params: any): Promise<T[]>;
-    remove(id: any): Promise<void>;
+    remove(entities: T[]): Promise<void>;
     save(data: T): Promise<void>;
     printTable(): Promise<void>;
 }
