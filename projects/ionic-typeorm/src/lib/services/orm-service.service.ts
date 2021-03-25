@@ -1,12 +1,12 @@
-import { Inject } from '@angular/core';
-import { ITypeOrmConnection, TYPE_ORM_CONNECTION } from '../connection';
-import { Repository } from 'typeorm';
 import { IDBService } from './db-service';
+import { OrmDatabaseService } from './orm-database.service';
 
-export abstract class OrmService<T, OrmType> implements IDBService<T> {
+export abstract class OrmService<T, OrmType> extends OrmDatabaseService implements IDBService<T> {
     protected abstract repositoryName: string;
 
-    constructor(@Inject(TYPE_ORM_CONNECTION) private orm: ITypeOrmConnection) {}
+    public async repo() {
+        return await this.getRepository<OrmType>(this.repositoryName);
+    }
 
     public async save(data: T): Promise<void> {
         try {
@@ -33,12 +33,6 @@ export abstract class OrmService<T, OrmType> implements IDBService<T> {
     public async printTable() {
         const data = await this.all();
         data.sort().forEach((x) => console.log(this.repositoryName + ' :', x));
-    }
-
-    protected async repo() {
-        const connection = await this.orm.connection;
-        const repo = connection.getRepository(this.repositoryName) as Repository<OrmType>;
-        return repo;
     }
 
     protected abstract mapData(data: OrmType): T;
