@@ -6,6 +6,9 @@ export class TestItem extends CommonEntity {
     @Column()
     name!: string;
 
+    @Column()
+    age!: number;
+
     @Column({
         nullable: true,
     })

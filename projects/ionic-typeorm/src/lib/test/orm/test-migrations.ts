@@ -9,6 +9,7 @@ class AddTestItemTable1616412863882 implements MigrationInterface {
             CREATE TABLE "item" (
                 "id" integer PRIMARY KEY AUTOINCREMENT NOT NULL,
                 "name" varchar NOT NULL,
+                "age" integer NOT NULL,
                 "phoneNumber" varchar
             )
         `);
@@ -27,10 +28,12 @@ class AddTestItemTable1616412863882 implements MigrationInterface {
             {
                 id: 1,
                 name: 'Seed 1',
+                age: 20,
                 phoneNumber: '012345',
             },
             {
                 id: 2,
+                age: 30,
                 name: 'Seed 2',
                 phoneNumber: '45678',
             },

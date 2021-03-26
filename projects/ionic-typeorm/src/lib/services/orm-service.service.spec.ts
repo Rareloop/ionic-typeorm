@@ -7,6 +7,7 @@ import { getTypeOrmConnection, TYPE_ORM_CONNECTION } from '../connection';
 import { expectedAllTestItems } from '../test/orm/test-expected-data';
 import { ITypeOrmConnection } from 'dist/ionic-typeorm/lib';
 import { castTestItem } from '../test/orm/test-interfaces';
+import { IsNull, MoreThan, Not } from 'typeorm';
 
 describe('OrmService', () => {
     let service: TestItemService;
@@ -18,10 +19,6 @@ describe('OrmService', () => {
         conn = getTypeOrmConnection('test-app-db', TYPE_ORM_TEST_ENTITIES, TYPE_ORM_TEST_MIGRATIONS);
         utils = new TypeOrmTestUtils(conn, 'orm/fixtures/');
         await utils.openDbConnection(['warn', 'error']); // , 'query', 'schema', 'all']);
-    });
-
-    afterAll(async () => {
-        await utils.closeDbConnection();
     });
 
     beforeEach(
@@ -54,17 +51,31 @@ describe('OrmService', () => {
         });
     });
 
-    it('should return all items where null clause', async () => {
-        const items = await service.allWhere('phoneNumber', 'NULL');
+    it('should return all items with options', async () => {
+        const items = await service.all({
+            order: {
+                name: 'DESC',
+            },
+        });
+
+        expect(items.length).toEqual(expectedAllTestItems.length);
+        expect(items.length).toEqual(3);
+        expect(items[0].name).toEqual('James Bond');
+        expect(items[1].name).toEqual('Jack Smith');
+        expect(items[2].name).toEqual('Jack MacDonald');
+    });
+
+    it('should return all items with custom options', async () => {
+        const items = await service.all({
+            where: {
+                phoneNumber: Not(IsNull()),
+                age: MoreThan(30),
+            },
+            take: 10,
+        });
 
         expect(items.length).toEqual(1);
-        const actualItem = castTestItem(items[0]);
-        expect(actualItem).toEqual({
-            id: actualItem.id,
-            name: 'John Smith',
-            phoneNumber: null,
-            hasPhoneNumber: false,
-        });
+        expect(items[0].name).toEqual('Jack MacDonald');
     });
 
     it('should return item with id', async () => {
@@ -87,6 +98,7 @@ describe('OrmService', () => {
 
         await service.save({
             name: 'John Wayne',
+            age: 66,
         });
 
         const updatedItems = await service.all();
@@ -97,6 +109,7 @@ describe('OrmService', () => {
         expect(newItem).toEqual({
             id: newItem.id,
             name: 'John Wayne',
+            age: 66,
             phoneNumber: null,
             hasPhoneNumber: false,
         });

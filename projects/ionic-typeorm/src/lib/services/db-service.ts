@@ -1,24 +1,14 @@
-import { BaseEntity } from 'typeorm';
-
-export type IOrmServiceWhereOperators =
-    | '<=' // Less than or equal to
-    | '<' // Less than
-    | '>' // More than
-    | '>=' // More than or equal to
-    | '!' // Not
-    | '=' // Equal
-    | 'NULL' // Null
-    | 'LIKE' // Like
-    | 'ILIKE' // Ilike
-    | 'BETWEEN' // Between
-    | 'IN' // In
-    | 'RAW'; // In
+import { BaseEntity, FindManyOptions } from 'typeorm';
 
 export interface IDBService<T extends BaseEntity> {
+    /** Fetch the entity with id  */
     fetch(id: any): Promise<T | null>;
-    all(): Promise<T[]>;
-    allWhere(field: keyof T, comparitor: IOrmServiceWhereOperators, ...params: any): Promise<T[]>;
+    /** Fetch all entities  */
+    all(options?: FindManyOptions): Promise<T[]>;
+    /** Remove the list of entities  */
     remove(entities: T[]): Promise<void>;
+    /** Save and entity  */
     save(data: T): Promise<void>;
+    /** Return a array of string representation of the entities  */
     printTable(): Promise<void>;
 }

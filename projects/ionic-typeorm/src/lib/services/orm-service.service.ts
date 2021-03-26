@@ -1,6 +1,5 @@
 import { BaseEntity, FindManyOptions } from 'typeorm';
-import { getWhereClauses } from './clauses';
-import { IDBService, IOrmServiceWhereOperators } from './db-service';
+import { IDBService } from './db-service';
 import { OrmDatabaseService } from './orm-database.service';
 
 export abstract class OrmService<T extends BaseEntity> extends OrmDatabaseService implements IDBService<T> {
@@ -20,37 +19,15 @@ export abstract class OrmService<T extends BaseEntity> extends OrmDatabaseServic
         }
     }
 
-    public async all(): Promise<T[]> {
+    public async all(options?: FindManyOptions): Promise<T[]> {
         try {
             const repo = await this.repo();
-            const ormTasks = await repo.find();
+            const ormTasks = await repo.find(options);
             return ormTasks;
         } catch (e) {
             console.error(JSON.stringify(e));
             return Promise.reject(e);
         }
-    }
-
-    public async allWhere(field: keyof T, comparitor: IOrmServiceWhereOperators, ...params: any): Promise<T[]> {
-        try {
-            const repo = await this.repo();
-            const ormTasks = await repo.find(this.parseClause(field, comparitor, params));
-            return ormTasks;
-        } catch (e) {
-            console.error(JSON.stringify(e));
-            return Promise.reject(e);
-        }
-    }
-
-    parseClause(field: keyof T, comparitor: IOrmServiceWhereOperators, ...params: any): FindManyOptions<T> {
-        const allClauses = getWhereClauses<T>();
-        const matchedClause = allClauses.find((x) => x.matches(comparitor));
-        if (!matchedClause) {
-            console.error('Did not find where clause for comparitor: ' + comparitor);
-            return {};
-        }
-
-        return matchedClause.parse(field, params);
     }
 
     public async remove(entities: T[]): Promise<void> {
