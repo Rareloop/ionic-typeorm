@@ -14,7 +14,7 @@
     "version": "1.0.0",
     "main": ".prettierrc.js",
     "scripts": {
-        "build": "ng build",
+        "build": "ng build --prod",
         "fix": "npm run fix:lint && npm run fix:style",
         "fix:lint": "ng lint --fix",
         "fix:style": "npm run packagejson:fix && npm run prettier:fix",
@@ -24,7 +24,7 @@
         "ng": "ng",
         "packagejson:check": "npx prettier-package-json --list-different package.json",
         "packagejson:fix": "npx prettier-package-json --write package.json",
-        "prepublish": "npm run build -- --prod",
+        "prepublish": "npm run build",
         "publish": "(cd dist/ionic-typeorm && npm publish)",
         "start": "ng serve",
         "test": "ng test",
