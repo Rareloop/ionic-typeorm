@@ -1,118 +1,142 @@
 # Ionic Typeorm
 
-Install
+## Installation
+
+Follow [install steps](installs.md) for installing `@rareloop/ionic-typeorm`
+
+</br>
+
+## Testing
+
+Follow [unit testing config](./installs.md) for additional changes to allow karma to run unit tests with `typeorm`
+
+</br>
+
+## Usage
+
+The library expects entities and migrations in a specific path:
 
 ``` sh
-npm install --save @rareloop/ionic-typeorm
+    src/app/database/orm/entities/*.ts
+    src/app/database/orm/migrations/*.ts
 ```
 
-Install peer dependencies
+In addition the example project also creates
 
 ``` sh
-npm install --save typeorm sql.js
-npm install --save-dev @angular-builders/custom-webpack
+    src/app/database/orm/seeders/*.ts
+    src/app/database/orm/services/*.ts
 ```
 
-In `tsconfig.json`:
+### Entities
 
-``` json
-    "compilerOptions": {
-        "emitDecoratorMetadata": true,
-        "paths": {
+Entities are just `typeorm` entities with a `CommonEntity` definition one that contains a single auto-id column
+
+``` typescript
+import { CommonEntity } from '@rareloop/ionic-typeorm';
+import { Entity, Column } from 'typeorm';
+
+@Entity('item')
+export class Item extends CommonEntity {
+    @Column()
+    name!: string;
+
+...
+}
+```
+
+### Seeders
+
+Seeders wrap a seed function in an Entity type to allow simple seeding of data during migrations
+
+``` typescript
+import { Item } from '../entities/item';
+import { OrmSeeder } from '@rareloop/ionic-typeorm';
+
+export class ItemSeeder extends OrmSeeder<Item> {
+  repositoryName = 'item';
+}
+```
+
+### Migrations
+
+Migrations are standard `typeorm` definitions but can include seeders.
+
+``` typescript
+import { MigrationInterface, QueryRunner } from 'typeorm';
+import { ItemSeeder } from '../seeders/item.seeder';
+
+export class AddItemTable1616412863882 implements MigrationInterface {
+    name = 'AddItemTable1616412863882';
+
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        ...
+
+        await this.seed(queryRunner);
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        ...
+    }
+
+    private async seed(queryRunner: QueryRunner): Promise<void> {
+        new ItemSeeder(queryRunner).seed([
             ...
-           "react-native-sqlite-storage": ["node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"],
-        }
-    },
-```
-
-and `tsconfig.app.json`
-
-``` json
-{
-    "compilerOptions": {
-        "types": ["node"],
-    },
-
-    "include": [
-        ...
-        "src/**/*.ts",
-        "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"
-    ],
-    "exclude": [
-        ...
-        "src/**/*.spec.ts"
-    ]
+        ]);
+    }
 }
 ```
 
-In `angular.json`
+### Services
 
-``` json
-{
-    "projects": {
-        "app": {
-            "architect": {
-                "build": {
-                    "builder": "@angular-builders/custom-webpack:browser",
-                    "options": {
-                        "customWebpackConfig": {
-                            "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.asm.js"
-                        },
-                    },
-                    "configurations": {
-                        "production": {
-                            "customWebpackConfig": {
-                                "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.wasm.js"
-                            },
-                        }
-                    }
-                },
-                "serve": {
-                    "builder": "@angular-builders/custom-webpack:dev-server"
-                }
-            }
-        }
-    }
-```
+Services provide a wrapper to the `typeorm` connection and provide useful operations with type safety.
 
-For unit tests: `karma.conf.js`
+``` typescript
+@Injectable({
+    providedIn: 'root',
+})
+export class ItemService extends OrmService<Item> {
+    repositoryName = 'item';
 
-``` javascript
-
-module.exports = function (config) {
-    config.set({
-        files: [
-            {
-                pattern: 'node_modules/@rareloop/ionic-typeorm/test-lib/sql.js.0.5.0/sql.js',
-                included: true,
-                watched: false,
+    someMethod() {
+        return this.all({
+            where: {
+                phoneNumber: Not(IsNull()),
+                age: MoreThan(30),
             },
-        ],
-    })
-}
-```
+            take: 10,
+        })
+    }
 
-and `tsconfig.spec.json`
-
-``` json
-{
-    "compilerOptions": {
-        "types": ["jasmine", "node"],
+    create(name: string) {
+        return this.save({
+            name
+        })
     }
 }
 ```
 
-This `cli` folder allows auto-building migrations
+``` typescript
+export interface IDBService<T extends BaseEntity> {
+    /** Fetch the entity with id  */
+    fetch(id: any): Promise<T | null>;
 
-## How to set up
+    /** Fetch all entities  */
+    all(options?: FindManyOptions): Promise<T[]>;
 
-In order to use it add the following to the `package.json` of the project.
-You must have entities and migrations in the following locations:
+    /** Remove the list of entities  */
+    remove(entities: T[]): Promise<void>;
 
-``` sh
- src/app/database/orm/entities/*.ts
- src/app/database/orm/migrations/*.ts
+    /** Save and entity  */
+    save(data: T): Promise<void>;
+}
 ```
+
+</br>
+
+## Migrations
+
+Add the following npm scripts to provide migration commands.
 
 ``` JSON
     "scripts": {
@@ -121,16 +145,25 @@ You must have entities and migrations in the following locations:
     }
 ```
 
-## How to run
+You must have entities and migrations in the following locations:
 
-After this just run:
-`npm run migration:generate UpdatedTaskEntity` for example and a new migration will be created.
-The new migration will contain the delta with the current migrations.
+``` sh
+ src/app/database/orm/entities/*.ts
+ src/app/database/orm/migrations/*.ts
+```
 
-Or run `npm run migration:create NewEntity` and an empty migration will be created.
+To create a fresh migration file:
 
-## How it works
+``` sh
+npm run migration:create NewEntity
+```
 
-It generates a new sqlite database and runs all existing migrations against it.
-Then when running `migration:generate` it compares with this latest database
-to auto generated any schema changes.
+Alternatively make modifications to you `Entity` files and the run the following to automatically generate the migration for the delta
+
+``` sh
+npm run migration:generate UpdatedTaskEntity
+```
+
+### How it works
+
+`migration:generate` uses a local sqlite database file and runs all existing migrations against it. Then it compares this against the latest `Entity` definitions to calculate any schema changes.
