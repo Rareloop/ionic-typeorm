@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-
+import { Item } from '../database/orm/entities/item';
 import { ItemService } from '../database/orm/services/item.service';
-import { IItem } from '../model/item';
 
 @Component({
     selector: 'app-home',
@@ -9,7 +8,7 @@ import { IItem } from '../model/item';
     styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-    items: IItem[] = [];
+    items: Item[] = [];
 
     constructor(itemService: ItemService) {
         itemService.all().then((items) => {

@@ -15,7 +15,6 @@
         "lib": ["es2018", "dom"],
         "emitDecoratorMetadata": true,
         "paths": {
-            "typeorm": ["node_modules/typeorm/browser"],
             "react-native-sqlite-storage": ["node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"]
         }
     },

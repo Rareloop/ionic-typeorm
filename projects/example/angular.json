@@ -15,13 +15,13 @@
                     "builder": "@angular-builders/custom-webpack:browser",
                     "options": {
                         "outputPath": "www",
+                        "customWebpackConfig": {
+                            "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.asm.js"
+                        },
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.app.json",
-                        "customWebpackConfig": {
-                            "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.asm.js"
-                        },
                         "assets": [
                             {
                                 "glob": "**/*",
@@ -42,15 +42,15 @@
                     },
                     "configurations": {
                         "production": {
+                            "customWebpackConfig": {
+                                "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.wasm.js"
+                            },
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
                                     "with": "src/environments/environment.prod.ts"
                                 }
                             ],
-                            "customWebpackConfig": {
-                                "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.wasm.js"
-                            },
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -177,6 +177,7 @@
         }
     },
     "cli": {
+      "analytics": false,
         "defaultCollection": "@ionic/angular-toolkit"
     },
     "schematics": {

@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { TYPE_ORM_ENTITIES, TYPE_ORM_MIGRATIONS } from './database/orm';
 import { getTypeOrmConnection, ITypeOrmConnection, TYPE_ORM_CONNECTION } from '@rareloop/ionic-typeorm';
+import { APP_INITIALIZER } from '@angular/core';
 
 const initApp = (orm: ITypeOrmConnection): (() => Promise<any>) => async () => {
     console.log('initializeApp: connecting to ORM DB');

@@ -1,5 +1,18 @@
 # Ionic Typeorm
 
+Install
+
+``` sh
+npm install --save @rareloop/ionic-typeorm
+```
+
+Install peer dependencies
+
+``` sh
+npm install --save typeorm sql.js
+npm install --save-dev @angular-builders/custom-webpack
+```
+
 In `tsconfig.json`:
 
 ``` json
@@ -20,19 +33,16 @@ and `tsconfig.app.json`
         "types": ["node"],
     },
 
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"],
-}
-```
-
-Migration scripts
-
-In `package.json`:
-
-``` json
-    "scripts": [
-        "migration:create": "npx ionic-typeorm-create",
-        "migration:generate": "npx ionic-typeorm-generate"
+    "include": [
+        ...
+        "src/**/*.ts",
+        "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"
+    ],
+    "exclude": [
+        ...
+        "src/**/*.spec.ts"
     ]
+}
 ```
 
 In `angular.json`
@@ -106,8 +116,8 @@ You must have entities and migrations in the following locations:
 
 ``` JSON
     "scripts": {
-        "migration:generate": "./node_modules/ionic-typeorm/typeorm/cli/migration-generate.sh",
-        "migration:create": "./node_modules/ionic-typeorm/typeorm/cli/migration-create.sh"
+        "migration:create": "npx ionic-typeorm-create",
+        "migration:generate": "npx ionic-typeorm-generate"
     }
 ```
 
