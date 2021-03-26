@@ -12,7 +12,6 @@ export abstract class OrmSeeder<OrmType> implements IOrmSeeder {
     public async seed(data: any[]): Promise<void> {
         const repo = await this.repo();
         await repo.save(data);
-        // console.log('Seeded: ' + this.repositoryName + ':', data);
     }
 
     protected async repo() {

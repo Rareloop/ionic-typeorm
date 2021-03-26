@@ -52,11 +52,6 @@ export abstract class OrmService<T extends BaseEntity> extends OrmDatabaseServic
         }
     }
 
-    public async printTable() {
-        const data = await this.all();
-        data.sort().forEach((x) => console.log(this.repositoryName + ' :', x));
-    }
-
     public async repo() {
         return await this.getRepository<T>(this.repositoryName);
     }

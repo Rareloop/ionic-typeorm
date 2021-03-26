@@ -11,14 +11,14 @@ export class TypeOrmConnectionProvider {
 
     public async connect(type: 'cordova' | 'browser' = 'browser', logging?: string[]) {
         if (this.isConnected()) {
-            // console.warn('Already connected to TypeORM Connection');
+            console.warn('Already connected to TypeORM Connection');
             return;
         }
 
         const options = this.dbOptions(type, logging);
-        console.log('CONNECTION OPTIONS', options);
+        // console.log('CONNECTION OPTIONS', options);
         this.conn = await createConnection(options);
-        console.log('CONNECTED TO ORM: ', type);
+        // console.log('CONNECTED TO ORM: ', type);
     }
 
     private dbOptions(type: 'cordova' | 'browser', logging?: string[]): ConnectionOptions {
@@ -37,13 +37,9 @@ export class TypeOrmConnectionProvider {
             };
         }
 
-        // additional options
         const additional = {
             logging: ['warn', 'error'],
-            // synchronize: true,
             entities: this.entities,
-            // "migrationsTableName": "custom_migration_table",
-
             // NOTE: Have to manually add all migrations for cordova atm
             // https://github.com/typeorm/typeorm/issues/2360
             migrations: this.migrations,
