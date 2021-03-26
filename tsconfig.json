@@ -11,13 +11,16 @@
         "declaration": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "moduleResolution": "node",
         "importHelpers": true,
         "target": "es2015",
         "module": "es2020",
         "lib": ["es2018", "dom"],
         "paths": {
-            "ionic-typeorm": ["dist/ionic-typeorm/ionic-typeorm", "dist/ionic-typeorm"]
+            "react-native-sqlite-storage": ["projects/ionic-typeorm/config/shims/dummy.ts"],
+            "ionic-typeorm": ["dist/ionic-typeorm/ionic-typeorm", "dist/ionic-typeorm"],
+            "@rareloop/ionic-typeorm": ["projects/ionic-typeorm"]
         }
     },
     "angularCompilerOptions": {

@@ -1,5 +1,5 @@
 import { IOrmDatabaseEntity, OrmDatabaseService } from '../services/orm-database.service';
-import { getTypeOrmConnection } from '../connection';
+import { ITypeOrmConnection } from '../connection';
 
 /**
  * This class is used to support TypeORM database testing
@@ -13,16 +13,15 @@ export class TypeOrmTestUtils {
     /**
      * Creates an instance of TestUtils
      */
-    constructor(dbName: string, entities: any[], migrations: any[]) {
-        const conn = getTypeOrmConnection(dbName, entities, migrations);
+    constructor(conn: ITypeOrmConnection, private fixtureDir = 'fixtures/') {
         this.databaseService = new OrmDatabaseService(conn);
     }
 
     /**
      * Closes the database connections
      */
-    async openDbConnection() {
-        return this.databaseService.connect('browser');
+    async openDbConnection(logging?: string[]) {
+        return this.databaseService.connect('browser', logging);
     }
 
     /**
@@ -68,9 +67,13 @@ export class TypeOrmTestUtils {
     async loadAll(entities: IOrmDatabaseEntity[]) {
         try {
             for (const entity of entities) {
-                const items = await this.getEntityMockData(entity.name);
-                if (items.length > 0) {
-                    await this.insertEntityMockData(entity.name, items);
+                const data = await this.getEntityMockData(entity.name);
+                if (data.items && data.items.length > 0) {
+                    // eslint-disable-next-line @typescript-eslint/prefer-for-of
+                    for (let i = 0; i < data.items.length; i++) {
+                        const item = data.items[i];
+                        await this.insertEntityMockData(entity.name, item);
+                    }
                 }
             }
         } catch (error) {
@@ -83,15 +86,16 @@ export class TypeOrmTestUtils {
         return repo.createQueryBuilder(name).insert().values(items).execute();
     }
 
-    private async getEntityMockData(name: string) {
-        let data = [];
-        const fixtureFile = `fixtures/${name.toLowerCase()}.json`;
+    private async getEntityMockData(name: string): Promise<{ items: any[] }> {
+        let data: { default: { items: any[] } } = { default: { items: [] } };
+        const fixtureFile = this.fixtureDir + `${name.toLowerCase()}.json`;
         try {
             data = await this.loadMockData(fixtureFile);
         } catch (e) {
+            console.warn('Fixture not loaded: ' + fixtureFile);
             // If no data, do nothing
         }
-        return data;
+        return data.default;
     }
 
     private async loadMockData(filename: string): Promise<any> {

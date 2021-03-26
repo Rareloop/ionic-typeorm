@@ -4,7 +4,7 @@ import { Connection } from 'typeorm';
 /** Interface for interacting with a TypeORM connection */
 export interface ITypeOrmConnection {
     readonly connection: Connection;
-    connect(type?: 'cordova' | 'browser'): Promise<void>;
+    connect(type?: 'cordova' | 'browser', logging?: string[]): Promise<void>;
 }
 
 /** Injectable token for dependency injection */
