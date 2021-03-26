@@ -8,6 +8,7 @@ import { expectedAllTestItems } from '../test/orm/test-expected-data';
 import { ITypeOrmConnection } from 'dist/ionic-typeorm/lib';
 import { castTestItem } from '../test/orm/test-interfaces';
 import { IsNull, MoreThan, Not } from 'typeorm';
+import { SEED_DATA } from '../test/orm/test-seed-data';
 
 describe('OrmService', () => {
     let service: TestItemService;
@@ -17,7 +18,7 @@ describe('OrmService', () => {
 
     beforeAll(async () => {
         conn = getTypeOrmConnection('test-app-db', TYPE_ORM_TEST_ENTITIES, TYPE_ORM_TEST_MIGRATIONS);
-        utils = new TypeOrmTestUtils(conn, 'orm/fixtures/');
+        utils = new TypeOrmTestUtils(conn, SEED_DATA);
         await utils.openDbConnection(['warn', 'error']); // , 'query', 'schema', 'all']);
     });
 

@@ -1,6 +1,6 @@
 {
     "name": "@rareloop/ionic-typeorm",
-    "version": "0.0.8",
+    "version": "0.0.15",
     "description": "",
     "license": "MIT",
     "author": "Rareloop",
@@ -13,12 +13,10 @@
         "url": "https://github.com/Rareloop/ionic-typeorm/issues"
     },
     "peerDependencies": {
-        "@angular/common": "^11",
-        "@angular/core": "^11",
-        "typeorm": "^0.2",
-        "sql.js": "^1.5"
-    },
-    "devDependencies": {
+        "@angular/common": "^11.0.9",
+        "@angular/core": "^11.0.9",
+        "typeorm": "^0.2.31",
+        "sql.js": "^1.5.0",
         "@angular-builders/custom-webpack": "^11"
     },
     "bin": {

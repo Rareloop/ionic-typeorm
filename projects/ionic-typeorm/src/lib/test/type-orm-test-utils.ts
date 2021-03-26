@@ -1,5 +1,5 @@
-import { IOrmDatabaseEntity, OrmDatabaseService } from '../services/orm-database.service';
 import { ITypeOrmConnection } from '../connection';
+import { IOrmDatabaseEntity, OrmDatabaseService } from '../services';
 
 /**
  * This class is used to support TypeORM database testing
@@ -13,7 +13,7 @@ export class TypeOrmTestUtils {
     /**
      * Creates an instance of TestUtils
      */
-    constructor(conn: ITypeOrmConnection, private fixtureDir = 'fixtures/') {
+    constructor(conn: ITypeOrmConnection, private fixtureData: { [key: string]: { items: any[] } }) {
         this.databaseService = new OrmDatabaseService(conn);
     }
 
@@ -87,19 +87,13 @@ export class TypeOrmTestUtils {
     }
 
     private async getEntityMockData(name: string): Promise<{ items: any[] }> {
-        let data: { default: { items: any[] } } = { default: { items: [] } };
-        const fixtureFile = this.fixtureDir + `${name.toLowerCase()}.json`;
+        let data: { items: any[] } = { items: [] };
         try {
-            data = await this.loadMockData(fixtureFile);
+            data = this.fixtureData[name.toLowerCase()];
         } catch (e) {
-            console.warn('Fixture not loaded: ' + fixtureFile);
+            console.warn('Fixture not loaded: ' + name.toLowerCase());
             // If no data, do nothing
         }
-        return data.default;
-    }
-
-    private async loadMockData(filename: string): Promise<any> {
-        const json = await import('./' + filename);
-        return json;
+        return data;
     }
 }
