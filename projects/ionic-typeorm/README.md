@@ -2,7 +2,7 @@
 
 ## Installation
 
-Follow [install steps](installs.md) for installing `@rareloop/ionic-typeorm`
+Follow [install steps](./docs/install.md) for installing `@rareloop/ionic-typeorm`
 
 An example Ionic project can be found [in the example project](../example/README.md)
 
@@ -10,7 +10,7 @@ An example Ionic project can be found [in the example project](../example/README
 
 ## Testing
 
-Follow [unit testing config](./installs.md) for additional changes to allow karma to run unit tests with `typeorm`
+Follow [unit testing config](./docs/testing.md) for additional changes to allow karma to run unit tests with `typeorm`
 
 </br>
 
@@ -136,7 +136,7 @@ export interface IDBService<T extends BaseEntity> {
 
 </br>
 
-## Migrations
+## Auto-Migrations
 
 Add the following npm scripts to provide migration commands.
 

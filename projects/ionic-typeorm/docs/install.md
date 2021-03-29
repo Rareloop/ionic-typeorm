@@ -1,15 +1,18 @@
 # Ionic Typeorm Installation
 
+Install the library and it's dependencies.
+
 ``` sh
 npm install --save @rareloop/ionic-typeorm
 ```
-
-Install peer dependencies
 
 ``` sh
 npm install --save typeorm sql.js
 npm install --save-dev @angular-builders/custom-webpack
 ```
+
+To allow the `typeorm` entity decorations we require an extra compiler option.
+We also fix a bug where `react-native-sqlite-storage` is not defined by pointing it at a shim.
 
 In `tsconfig.json`:
 
@@ -22,6 +25,8 @@ In `tsconfig.json`:
         }
     },
 ```
+
+Update the tsconfig to use `node` types and to include our shim file.
 
 and `tsconfig.app.json`
 
@@ -42,6 +47,8 @@ and `tsconfig.app.json`
     ]
 }
 ```
+
+In order to build `typeorm` correctly we require a `custom-webpack` builder so update the `angular.json` to do this.
 
 In `angular.json`
 
@@ -70,14 +77,5 @@ In `angular.json`
                 }
             }
         }
-    }
-```
-
-Add the following scripts for use for migrations
-
-``` JSON
-    "scripts": {
-        "migration:create": "npx ionic-typeorm-create",
-        "migration:generate": "npx ionic-typeorm-generate"
     }
 ```
