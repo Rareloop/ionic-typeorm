@@ -4,7 +4,7 @@
 
 Follow [install steps](installs.md) for installing `@rareloop/ionic-typeorm`
 
-An example Ionic project can be found [in the example project]('../example/README.md')
+An example Ionic project can be found [in the example project](../example/README.md)
 
 </br>
 
