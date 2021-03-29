@@ -7,7 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import { TYPE_ORM_ENTITIES, TYPE_ORM_MIGRATIONS } from './database/orm';
+import { TYPE_ORM_ENTITIES, TYPE_ORM_MIGRATIONS } from '@orm/index';
 import { getTypeOrmConnection, ITypeOrmConnection, TYPE_ORM_CONNECTION } from '@rareloop/ionic-typeorm';
 import { APP_INITIALIZER } from '@angular/core';
 

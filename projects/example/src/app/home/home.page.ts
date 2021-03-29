@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Item } from '../database/orm/entities/item';
-import { ItemService } from '../database/orm/services/item.service';
+import { ItemService } from '@orm/services/item.service';
 
 @Component({
     selector: 'app-home',

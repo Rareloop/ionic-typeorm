@@ -12,6 +12,8 @@ npm install --save-dev @angular-builders/custom-webpack
 ```
 
 To allow the `typeorm` entity decorations we require an extra compiler option.
+Add `"@orm/*": ["src/app/database/orm/*"]` to allow shorter imports in your app.
+
 We also fix a bug where `react-native-sqlite-storage` is not defined by pointing it at a shim.
 
 In `tsconfig.json`:
@@ -22,6 +24,7 @@ In `tsconfig.json`:
         "paths": {
             ...
            "react-native-sqlite-storage": ["node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"],
+           "@orm/*": ["src/app/database/orm/*"]
         }
     },
 ```
