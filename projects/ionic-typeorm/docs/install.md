@@ -41,12 +41,7 @@ and `tsconfig.app.json`
 
     "include": [
         ...
-        "src/**/*.ts",
         "node_modules/@rareloop/ionic-typeorm/config/shims/dummy.ts"
-    ],
-    "exclude": [
-        ...
-        "src/**/*.spec.ts"
     ]
 }
 ```
