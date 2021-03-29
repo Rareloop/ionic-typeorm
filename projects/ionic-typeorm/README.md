@@ -16,13 +16,19 @@ Follow [unit testing config](./docs/testing.md) for additional changes to allow 
 
 The following steps outline what is require to use the library. There is also an [example project](../example/README.md) that has already been updated.
 
+</br>
+
 ### Create Entities Migrations and Services
 
 Follow [entities, migrations and services](./docs/database.md) to create your initial database schema and migrations.
 
+</br>
+
 ### Integrate with app.module
 
 After you have some migrations and entities you can follow [integrating into app.module.ts](./docs/integration.md) to ensure your database is loaded when the app loads.
+
+</br>
 
 ### Integrate services with pages
 
