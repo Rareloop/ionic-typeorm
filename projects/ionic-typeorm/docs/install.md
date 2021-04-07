@@ -77,3 +77,11 @@ In `angular.json`
         }
     }
 ```
+
+Important: If you are using `@ionic/angular-toolkit@2.3.1` or earlier then it will be using `copy-webpack-plugin@5` which requires a breaking difference within `webpack.wasm.js`. In this case the `production` path should be to:
+
+``` json
+    "customWebpackConfig": {
+        "path": "node_modules/@rareloop/ionic-typeorm/config/webpack.2.3.1.wasm.js"
+    },
+```
