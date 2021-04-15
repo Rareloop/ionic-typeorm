@@ -10,9 +10,9 @@ export class TypeOrmConnectionProvider {
     }
 
     public async connect(type: 'cordova' | 'browser' = 'browser', logging?: string[]) {
-        if (this.isConnected()) {
-            console.warn('Already connected to TypeORM Connection');
-            return;
+        if (this.conn !== undefined) {
+            await this.conn.close();
+            this.conn = undefined;
         }
 
         const options = this.dbOptions(type, logging);
@@ -53,9 +53,5 @@ export class TypeOrmConnectionProvider {
         Object.assign(dbOptions, additional);
 
         return dbOptions;
-    }
-
-    private isConnected() {
-        return typeof this.conn !== 'undefined';
     }
 }
