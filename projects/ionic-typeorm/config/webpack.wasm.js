@@ -14,7 +14,12 @@ module.exports = {
         // Copy the wasm file to the output dir
         new CopyPlugin({ patterns: [{ from: path.join(__dirname, '../../../sql.js/dist/sql-wasm.wasm') }] }),
     ],
-    node: {
-        fs: 'empty',
+    resolve: {
+        fallback: {
+            fs: false,
+            crypto: require.resolve('crypto-browserify'),
+            path: require.resolve('path-browserify'),
+            stream: require.resolve('stream-browserify'),
+        },
     },
 };
