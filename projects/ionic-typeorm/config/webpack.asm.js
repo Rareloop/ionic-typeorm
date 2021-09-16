@@ -11,7 +11,12 @@ module.exports = {
             'window.SQL': path.join(__dirname, '../../../sql.js/dist/sql-asm.js'),
         }),
     ],
-    node: {
-        fs: 'empty',
+    resolve: {
+        fallback: {
+            fs: false,
+            crypto: require.resolve('crypto-browserify'),
+            path: require.resolve('path-browserify'),
+            stream: require.resolve('stream-browserify'),
+        },
     },
 };
